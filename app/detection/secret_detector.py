@@ -23,13 +23,11 @@ class SecretDetector(BaseDetector):
     category=DetectionCategory.SECRET,
     severity=FindingSeverity.CRITICAL,
     confidence=0.99,
-
+    risk_score=40,
     title="AWS Access Key",
-
     description="AWS Access Key detected.",
-
     evidence={
-        "pattern":"AKIA..."
+        "pattern": "AKIA...",
     },
 )
             )

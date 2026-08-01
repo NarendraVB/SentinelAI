@@ -31,19 +31,17 @@ class PromptDetector(BaseDetector):
             if keyword in prompt:
                 findings.append(
                 DetectionResult(
-                    detector=self.__class__.__name__,
-                    category=DetectionCategory.PROMPT,
-                    severity=FindingSeverity.MEDIUM,
-                    confidence=0.85,
-
-                    title="Suspicious Prompt",
-
-                    description=f"Keyword '{keyword}' detected.",
-
-                    evidence={
-                        "keyword": keyword
-                    },
-                )
+    detector=self.__class__.__name__,
+    category=DetectionCategory.PROMPT,
+    severity=FindingSeverity.MEDIUM,
+    confidence=0.85,
+    risk_score=10,
+    title="Suspicious Prompt",
+    description=f"Keyword '{keyword}' detected.",
+    evidence={
+        "keyword": keyword,
+    },
+)
                 )
 
         return findings

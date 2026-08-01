@@ -1,7 +1,12 @@
-from sqlalchemy import text
+from fastapi import FastAPI
 
-from app.db.session import engine
+from app.api.v1.agents import router as agent_router
+from app.api.v1.events import router as event_router
 
-with engine.connect() as conn:
-    result = conn.execute(text("SELECT version();"))
-    print(result.scalar())
+app = FastAPI(
+    title="SentinelAI",
+    version="0.1.0",
+)
+
+app.include_router(agent_router)
+app.include_router(event_router)
