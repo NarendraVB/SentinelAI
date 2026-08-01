@@ -2,7 +2,7 @@ from fastapi import Depends
 from sqlalchemy.orm import Session
 
 from app.security.pipeline import SecurityPipeline
-from app.analytics.risk import RiskEngine
+from app.security.risk import RiskEngine
 from app.db.session import get_db
 from app.detection.engine import DetectionEngine
 from app.detection.registry import get_detectors

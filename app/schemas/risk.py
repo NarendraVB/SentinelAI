@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.analytics.risk import RiskLevel
+from app.security.risk import RiskLevel
 
 
 class RiskResponse(BaseModel):
