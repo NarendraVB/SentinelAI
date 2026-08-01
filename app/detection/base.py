@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 
 from app.models.event import Event
 
+from app.detection.result import DetectionResult
 
 class BaseDetector(ABC):
     """
@@ -11,7 +12,7 @@ class BaseDetector(ABC):
     """
 
     @abstractmethod
-    def detect(self, event: Event) -> list[str]:
+    def detect(self,event: Event) -> list[DetectionResult]:
         """
         Analyze an event and return findings.
 
