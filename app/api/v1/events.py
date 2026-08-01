@@ -13,6 +13,7 @@ from app.schemas.event import (
 )
 from app.schemas.finding import FindingResponse
 from app.services.event_service import EventService
+from app.core.dependencies import get_event_service
 
 router = APIRouter(
     prefix="/events",
@@ -20,11 +21,9 @@ router = APIRouter(
 )
 
 
-def get_event_service(
-    db: Session = Depends(get_db),
-) -> EventService:
-    repository = EventRepository(db)
-    return EventService(repository)
+service: EventService = Depends(
+    get_event_service
+)
 
 
 @router.post(
