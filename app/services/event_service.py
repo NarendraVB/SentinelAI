@@ -3,23 +3,24 @@ from app.detection.registry import get_detectors
 from app.models.event import Event
 from app.repositories.event_repository import EventRepository
 from app.security.pipeline import SecurityPipeline
+from app.alerts.engine import AlertEngine
+from app.services.alert_service import AlertService
 
 class EventService:
-    """
-    Handles event ingestion and security analysis.
-    """
 
     def __init__(
         self,
         repository: EventRepository,
         pipeline: SecurityPipeline,
+        alert_engine: AlertEngine,
+        alert_service: AlertService,
     ):
         self.repository = repository
         self.pipeline = pipeline
+        self.alert_engine = alert_engine
+        self.alert_service = alert_service
 
-        self.engine = DetectionEngine(
-            get_detectors()
-        )
+        
 
     def ingest_event(
         self,
@@ -32,6 +33,15 @@ class EventService:
         stored_event = self.repository.create(event)
         analysis = self.pipeline.process(
             stored_event
+        )
+        alerts = self.alert_engine.generate(
+    analysis
+)
+        for alert in alerts:
+            self.alert_service.create_alert(
+            event_id=stored_event.id,
+            domain_alert=alert,
+            risk_score=analysis.risk.score,
         )
 
         return stored_event, analysis
