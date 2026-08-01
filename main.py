@@ -1,11 +1,7 @@
-import logging
+from sqlalchemy import text
 
-from app.core.logging import configure_logging
+from app.db.session import engine
 
-configure_logging()
-
-logger = logging.getLogger(__name__)
-
-logger.info("SentinelAI backend started")
-logger.warning("This is a warning")
-logger.error("This is an error")
+with engine.connect() as conn:
+    result = conn.execute(text("SELECT version();"))
+    print(result.scalar())
