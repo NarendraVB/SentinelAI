@@ -32,3 +32,8 @@ class AlertRepository:
             .filter(Alert.id == alert_id)
             .first()
         )
+        
+    def update(self, alert: Alert) -> Alert:
+        self.db.commit()
+        self.db.refresh(alert)
+        return alert

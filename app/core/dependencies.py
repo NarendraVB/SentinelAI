@@ -13,6 +13,8 @@ from app.repositories.event_repository import EventRepository
 from app.services.event_service import EventService
 from app.repositories.alert_repository import AlertRepository
 from app.services.alert_service import AlertService
+from app.repositories.incident_repository import IncidentRepository
+from app.services.incident_service import IncidentService
 
 
 def get_detection_engine() -> DetectionEngine:
@@ -49,19 +51,37 @@ def get_security_pipeline() -> SecurityPipeline:
         risk_engine=get_risk_engine(),
     )
 
+def get_incident_repository(
+    db: Session = Depends(get_db),
+):
 
+    return IncidentRepository(db)
+
+def get_incident_service(
+    repository: IncidentRepository = Depends(
+        get_incident_repository
+    ),
+):
+
+    return IncidentService(repository)
 def get_event_service(
     db: Session = Depends(get_db),
-    alert_service: AlertService = Depends(get_alert_service)
+    alert_service: AlertService = Depends(get_alert_service),
+    incident_service: IncidentService = Depends(get_incident_service),
 ) -> EventService:
 
     repository = EventRepository(db)
 
     pipeline = get_security_pipeline()
+    alert_repository = AlertRepository(db)
     
     return EventService(
     repository=repository,
     pipeline=pipeline,
     alert_engine=AlertEngine(),
     alert_service=alert_service,
+    incident_service=incident_service,
+    alert_repository=alert_repository,
+    
 )
+    

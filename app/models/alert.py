@@ -9,7 +9,8 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
 from app.db.mixins import TimestampMixin
-
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
 
 class AlertSeverity(str, enum.Enum):
     LOW = "LOW"
@@ -66,5 +67,14 @@ class Alert(TimestampMixin, Base):
     )
     event = relationship(
     "Event",
+    back_populates="alerts",
+    )
+    incident_id: Mapped[uuid.UUID | None] = mapped_column(
+    UUID(as_uuid=True),
+    ForeignKey("incidents.id"),
+    nullable=True,
+    )
+    incident = relationship(
+    "Incident",
     back_populates="alerts",
     )
