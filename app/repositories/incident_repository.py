@@ -28,23 +28,11 @@ class IncidentRepository:
         incident_id: UUID,
     ) -> Incident | None:
 
-        return (
-            self.db.query(Incident)
-            .filter(
-                Incident.id == incident_id
-            )
-            .first()
-        )
+        return self.db.query(Incident).filter(Incident.id == incident_id).first()
 
     def get_all(self) -> list[Incident]:
 
-        return (
-            self.db.query(Incident)
-            .order_by(
-                Incident.created_at.desc()
-            )
-            .all()
-        )
+        return self.db.query(Incident).order_by(Incident.created_at.desc()).all()
 
     def update(
         self,
@@ -55,3 +43,14 @@ class IncidentRepository:
         self.db.refresh(incident)
 
         return incident
+
+    def get_alerts(
+        self,
+        incident_id: UUID,
+    ):
+        incident = self.get_by_id(incident_id)
+
+        if not incident:
+            return None
+
+        return incident.alerts

@@ -1,14 +1,8 @@
 from app.alerts.engine import AlertEngine
 from app.alerts.model import AlertSeverity
+from app.policies.decision import PolicyAction, PolicyDecision
 from app.security.analysis import SecurityAnalysis
-from app.security.risk import (
-    RiskAssessment,
-    RiskLevel,
-)
-from app.policies.decision import (
-    PolicyAction,
-    PolicyDecision,
-)
+from app.security.risk import RiskAssessment, RiskLevel
 
 
 def test_high_risk_generates_alert():
@@ -30,9 +24,7 @@ def test_high_risk_generates_alert():
 
     engine = AlertEngine()
 
-    alerts = engine.generate(
-        analysis
-    )
+    alerts = engine.generate(analysis)
 
     assert len(alerts) >= 1
     assert alerts[0].severity == AlertSeverity.HIGH

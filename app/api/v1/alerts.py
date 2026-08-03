@@ -3,7 +3,6 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
 
 from app.core.dependencies import get_alert_service
-from app.models.alert import AlertStatus
 from app.services.alert_service import AlertService
 
 router = APIRouter(
@@ -11,13 +10,15 @@ router = APIRouter(
     tags=["Alerts"],
 )
 
-@router.get("")
+
+@router.get("", summary="List all alerts")
 def list_alerts(
     service: AlertService = Depends(get_alert_service),
 ):
     return service.get_alerts()
 
-@router.get("/{alert_id}")
+
+@router.get("/{alert_id}", summary="Get an alert by ID")
 def get_alert(
     alert_id: UUID,
     service: AlertService = Depends(get_alert_service),
@@ -34,7 +35,7 @@ def get_alert(
     return alert
 
 
-@router.patch("/{alert_id}/acknowledge")
+@router.patch("/{alert_id}/acknowledge", summary="Acknowledge an alert")
 def acknowledge_alert(
     alert_id: UUID,
     service: AlertService = Depends(get_alert_service),
@@ -49,7 +50,9 @@ def acknowledge_alert(
         )
 
     return alert
-@router.patch("/{alert_id}/close")
+
+
+@router.patch("/{alert_id}/close", summary="Close an alert")
 def close_alert(
     alert_id: UUID,
     service: AlertService = Depends(get_alert_service),

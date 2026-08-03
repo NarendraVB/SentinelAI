@@ -1,11 +1,7 @@
+from app.alerts.model import Alert, AlertSeverity, AlertStatus
+from app.policies.decision import PolicyAction
 from app.security.analysis import SecurityAnalysis
 from app.security.risk import RiskLevel
-from app.policies.decision import PolicyAction
-from app.alerts.model import (
-    Alert,
-    AlertSeverity,
-    AlertStatus,
-)
 
 
 class AlertEngine:

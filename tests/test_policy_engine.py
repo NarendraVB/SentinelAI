@@ -1,8 +1,4 @@
-from app.detection.result import (
-    DetectionCategory,
-    DetectionResult,
-    FindingSeverity,
-)
+from app.detection.result import DetectionCategory, DetectionResult, FindingSeverity
 from app.policies.default_policy import DefaultPolicy
 from app.policies.engine import PolicyEngine
 
@@ -19,13 +15,9 @@ def test_secret_generates_alert():
         evidence={},
     )
 
-    engine = PolicyEngine(
-        [DefaultPolicy()]
-    )
+    engine = PolicyEngine([DefaultPolicy()])
 
-    decisions = engine.evaluate(
-        [finding]
-    )
+    decisions = engine.evaluate([finding])
 
     assert len(decisions) == 1
     assert decisions[0].action.value == "ALERT"

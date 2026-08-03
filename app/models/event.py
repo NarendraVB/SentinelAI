@@ -7,8 +7,8 @@ from typing import Any
 
 from sqlalchemy import DateTime, Enum, ForeignKey
 from sqlalchemy.dialects.postgresql import JSONB, UUID
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.db.base import Base
 from app.db.mixins import TimestampMixin
 
@@ -64,7 +64,7 @@ class Event(TimestampMixin, Base):
         nullable=False,
     )
     alerts = relationship(
-    "Alert",
-    back_populates="event",
-    cascade="all, delete-orphan",
+        "Alert",
+        back_populates="event",
+        cascade="all, delete-orphan",
     )

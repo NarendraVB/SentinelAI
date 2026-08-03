@@ -7,9 +7,8 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field
 
 from app.models.event import EventSeverity, EventType
-from app.detection.result import DetectionResult
-from app.schemas.finding import FindingResponse
 from app.schemas.analysis import SecurityAnalysisResponse
+
 
 class EventCreate(BaseModel):
     agent_id: UUID

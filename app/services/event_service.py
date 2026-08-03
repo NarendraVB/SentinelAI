@@ -1,12 +1,12 @@
-from app.detection.engine import DetectionEngine
-from app.detection.registry import get_detectors
+from app.alerts.engine import AlertEngine
 from app.models.event import Event
 from app.repositories.alert_repository import AlertRepository
 from app.repositories.event_repository import EventRepository
 from app.security.pipeline import SecurityPipeline
-from app.alerts.engine import AlertEngine
 from app.services.alert_service import AlertService
 from app.services.incident_service import IncidentService
+
+
 class EventService:
 
     def __init__(
@@ -24,8 +24,6 @@ class EventService:
         self.alert_service = alert_service
         self.incident_service = incident_service
         self.alert_repository = alert_repository
-
-        
 
     def ingest_event(
         self,
@@ -53,9 +51,7 @@ class EventService:
 
             stored_alerts.append(db_alert)
         # 5. Create incident
-        incident = self.incident_service.create_from_alerts(
-            stored_alerts
-        )
+        incident = self.incident_service.create_from_alerts(stored_alerts)
         # 6. Associate alerts with incident
         if incident:
 
@@ -69,9 +65,7 @@ class EventService:
         self,
         event_id,
     ):
-        return self.repository.get_by_id(
-            event_id
-        )
+        return self.repository.get_by_id(event_id)
 
     def list_events(self):
         return self.repository.list()

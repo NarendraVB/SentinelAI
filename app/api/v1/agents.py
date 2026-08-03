@@ -6,10 +6,7 @@ from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.models.agent import Agent
 from app.repositories.agent_repository import AgentRepository
-from app.schemas.agent import (
-    AgentCreate,
-    AgentResponse,
-)
+from app.schemas.agent import AgentCreate, AgentResponse
 from app.services.agent_service import AgentService
 
 router = APIRouter(
@@ -25,6 +22,7 @@ def get_agent_service(db: Session = Depends(get_db)) -> AgentService:
 
 @router.post(
     "",
+    summary="Create a new agent",
     response_model=AgentResponse,
     status_code=status.HTTP_201_CREATED,
 )
@@ -45,6 +43,7 @@ def create_agent(
 
 @router.get(
     "",
+    summary="List all agents",
     response_model=list[AgentResponse],
 )
 def list_agents(
@@ -55,6 +54,7 @@ def list_agents(
 
 @router.get(
     "/{agent_id}",
+    summary="Get an agent by ID",
     response_model=AgentResponse,
 )
 def get_agent(
@@ -74,6 +74,7 @@ def get_agent(
 
 @router.delete(
     "/{agent_id}",
+    summary="Delete an agent by ID",
     status_code=status.HTTP_204_NO_CONTENT,
 )
 def delete_agent(

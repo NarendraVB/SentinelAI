@@ -5,11 +5,10 @@ import uuid
 
 from sqlalchemy import Enum, Integer, String, Text
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
 from app.db.mixins import TimestampMixin
-from sqlalchemy.orm import relationship
 
 
 class IncidentSeverity(str, enum.Enum):
@@ -67,7 +66,6 @@ class Incident(TimestampMixin, Base):
         nullable=False,
     )
     alerts = relationship(
-    "Alert",
-    back_populates="incident",
+        "Alert",
+        back_populates="incident",
     )
-    

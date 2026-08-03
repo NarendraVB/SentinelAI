@@ -18,12 +18,7 @@ def create_event(payload: dict) -> Event:
 def test_detects_aws_key():
     detector = SecretDetector()
 
-    event = create_event(
-        {
-            "prompt":
-            "AKIA1234567890ABCDEF"
-        }
-    )
+    event = create_event({"prompt": "AKIA1234567890ABCDEF"})
 
     findings = detector.detect(event)
 
@@ -34,12 +29,7 @@ def test_detects_aws_key():
 def test_no_secret_detected():
     detector = SecretDetector()
 
-    event = create_event(
-        {
-            "prompt":
-            "Hello world"
-        }
-    )
+    event = create_event({"prompt": "Hello world"})
 
     findings = detector.detect(event)
 

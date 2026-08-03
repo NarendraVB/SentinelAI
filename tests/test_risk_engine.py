@@ -1,16 +1,6 @@
-from app.security.risk import (
-    RiskEngine,
-    RiskLevel,
-)
-from app.detection.result import (
-    DetectionCategory,
-    DetectionResult,
-    FindingSeverity,
-)
-from app.policies.decision import (
-    PolicyAction,
-    PolicyDecision,
-)
+from app.detection.result import DetectionCategory, DetectionResult, FindingSeverity
+from app.policies.decision import PolicyAction, PolicyDecision
+from app.security.risk import RiskEngine, RiskLevel
 
 
 def test_risk_calculation():

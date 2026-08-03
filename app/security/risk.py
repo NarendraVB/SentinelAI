@@ -19,7 +19,8 @@ class RiskAssessment:
     score: int
     level: RiskLevel
     reasons: list[str]
-    
+
+
 class RiskEngine:
     """
     Calculates overall risk from findings and policy decisions.
@@ -33,10 +34,7 @@ class RiskEngine:
         decisions: list[PolicyDecision],
     ) -> RiskAssessment:
 
-        score = sum(
-            finding.risk_score
-            for finding in findings
-        )
+        score = sum(finding.risk_score for finding in findings)
 
         score = min(score, self.MAX_SCORE)
 
@@ -49,15 +47,9 @@ class RiskEngine:
         else:
             level = RiskLevel.LOW
 
-        reasons = [
-            finding.title
-            for finding in findings
-        ]
+        reasons = [finding.title for finding in findings]
 
-        reasons.extend(
-            decision.reason
-            for decision in decisions
-        )
+        reasons.extend(decision.reason for decision in decisions)
 
         return RiskAssessment(
             score=score,

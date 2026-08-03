@@ -17,14 +17,11 @@ class AgentService:
         Register a new AI Agent.
         """
 
-        existing = self.repository.get_by_external_id(
-            agent.external_id
-        )
+        existing = self.repository.get_by_external_id(agent.external_id)
 
         if existing:
             raise ValueError(
-                f"Agent with external_id "
-                f"'{agent.external_id}' already exists."
+                f"Agent with external_id " f"'{agent.external_id}' already exists."
             )
 
         return self.repository.create(agent)

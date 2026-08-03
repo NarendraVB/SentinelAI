@@ -20,9 +20,7 @@ def create_prompt_event(prompt: str) -> Event:
 def test_prompt_detector_detects_keyword():
     detector = PromptDetector()
 
-    event = create_prompt_event(
-        "delete the production database"
-    )
+    event = create_prompt_event("delete the production database")
 
     findings = detector.detect(event)
 
@@ -33,9 +31,7 @@ def test_prompt_detector_detects_keyword():
 def test_prompt_detector_ignores_safe_prompt():
     detector = PromptDetector()
 
-    event = create_prompt_event(
-        "Summarize today's meeting."
-    )
+    event = create_prompt_event("Summarize today's meeting.")
 
     findings = detector.detect(event)
 

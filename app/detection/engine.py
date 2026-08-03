@@ -17,8 +17,6 @@ class DetectionEngine:
         findings: list[str] = []
 
         for detector in self.detectors:
-            findings.extend(
-                detector.detect(event)
-            )
+            findings.extend(detector.detect(event))
 
         return findings

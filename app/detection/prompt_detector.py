@@ -1,7 +1,6 @@
 from app.detection.base import BaseDetector
-from app.detection.result import DetectionResult, DetectionCategory, FindingSeverity
-from app.models.event import Event,EventType
-
+from app.detection.result import DetectionCategory, DetectionResult, FindingSeverity
+from app.models.event import Event, EventType
 
 SUSPICIOUS_KEYWORDS = {
     "password",
@@ -22,26 +21,23 @@ class PromptDetector(BaseDetector):
         if event.event_type.value != EventType.PROMPT:
             return findings
 
-        prompt = (
-            event.event_data.get("prompt", "")
-            .lower()
-        )
+        prompt = event.event_data.get("prompt", "").lower()
 
         for keyword in SUSPICIOUS_KEYWORDS:
             if keyword in prompt:
                 findings.append(
-                DetectionResult(
-    detector=self.__class__.__name__,
-    category=DetectionCategory.PROMPT,
-    severity=FindingSeverity.MEDIUM,
-    confidence=0.85,
-    risk_score=10,
-    title="Suspicious Prompt",
-    description=f"Keyword '{keyword}' detected.",
-    evidence={
-        "keyword": keyword,
-    },
-)
+                    DetectionResult(
+                        detector=self.__class__.__name__,
+                        category=DetectionCategory.PROMPT,
+                        severity=FindingSeverity.MEDIUM,
+                        confidence=0.85,
+                        risk_score=10,
+                        title="Suspicious Prompt",
+                        description=f"Keyword '{keyword}' detected.",
+                        evidence={
+                            "keyword": keyword,
+                        },
+                    )
                 )
 
         return findings

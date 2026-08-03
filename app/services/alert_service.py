@@ -1,14 +1,11 @@
 from __future__ import annotations
 
-from app.models.alert import (
-    Alert,
-    AlertSeverity,
-    AlertStatus,
-)
-from app.repositories.alert_repository import AlertRepository
-from app.alerts.model import Alert as DomainAlert
 from uuid import UUID
-from app.models.alert import AlertStatus
+
+from app.alerts.model import Alert as DomainAlert
+from app.models.alert import Alert, AlertSeverity, AlertStatus
+from app.repositories.alert_repository import AlertRepository
+
 
 class AlertService:
 
@@ -17,17 +14,16 @@ class AlertService:
         repository: AlertRepository,
     ):
         self.repository = repository
-        
+
     def get_alerts(self):
         return self.repository.get_all()
-    
+
     def get_alert(
         self,
         alert_id: UUID,
     ):
         return self.repository.get_by_id(alert_id)
-    
-    
+
     def create_alert(
         self,
         event_id,
@@ -38,9 +34,7 @@ class AlertService:
         db_alert = Alert(
             event_id=event_id,
             title=domain_alert.title,
-            severity=AlertSeverity(
-                domain_alert.severity.value
-            ),
+            severity=AlertSeverity(domain_alert.severity.value),
             status=AlertStatus.OPEN,
             reason=domain_alert.reason,
             risk_score=risk_score,
@@ -50,7 +44,7 @@ class AlertService:
 
     def list_alerts(self):
         return self.repository.get_all()
-    
+
     def acknowledge_alert(
         self,
         alert_id: UUID,
@@ -64,7 +58,7 @@ class AlertService:
         alert.status = AlertStatus.ACKNOWLEDGED
 
         return self.repository.update(alert)
-    
+
     def close_alert(
         self,
         alert_id: UUID,

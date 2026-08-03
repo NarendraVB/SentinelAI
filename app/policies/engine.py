@@ -1,5 +1,4 @@
 from app.detection.result import DetectionResult
-
 from app.policies.base import BasePolicy
 from app.policies.decision import PolicyDecision
 
@@ -21,8 +20,6 @@ class PolicyEngine:
 
         for finding in findings:
             for policy in self.policies:
-                decisions.extend(
-                    policy.evaluate(finding)
-                )
+                decisions.extend(policy.evaluate(finding))
 
         return decisions

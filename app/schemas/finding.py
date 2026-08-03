@@ -4,10 +4,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
-from app.detection.result import (
-    DetectionCategory,
-    FindingSeverity,
-)
+from app.detection.result import DetectionCategory, FindingSeverity
 
 
 class FindingResponse(BaseModel):

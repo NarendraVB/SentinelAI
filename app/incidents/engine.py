@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 from app.alerts.model import Alert
-from app.models.incident import (
-    IncidentSeverity,
-)
+from app.models.incident import IncidentSeverity
 
 
 class IncidentEngine:
@@ -23,10 +21,7 @@ class IncidentEngine:
         alerts: list[Alert],
     ) -> IncidentSeverity:
 
-        severities = {
-            alert.severity.value
-            for alert in alerts
-        }
+        severities = {alert.severity.value for alert in alerts}
 
         if "CRITICAL" in severities:
             return IncidentSeverity.CRITICAL
@@ -54,7 +49,4 @@ class IncidentEngine:
         alerts: list[Alert],
     ) -> str:
 
-        return "\n".join(
-            f"- {alert.reason}"
-            for alert in alerts
-        )
+        return "\n".join(f"- {alert.reason}" for alert in alerts)

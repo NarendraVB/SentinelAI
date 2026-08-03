@@ -1,11 +1,6 @@
-from app.detection.result import DetectionCategory
-from app.detection.result import DetectionResult
-
+from app.detection.result import DetectionCategory, DetectionResult
 from app.policies.base import BasePolicy
-from app.policies.decision import (
-    PolicyAction,
-    PolicyDecision,
-)
+from app.policies.decision import PolicyAction, PolicyDecision
 
 
 class DefaultPolicy(BasePolicy):

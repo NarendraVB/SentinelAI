@@ -25,9 +25,7 @@ class AgentRepository:
         return self.db.scalar(stmt)
 
     def get_by_external_id(self, external_id: str) -> Agent | None:
-        stmt = select(Agent).where(
-            Agent.external_id == external_id
-        )
+        stmt = select(Agent).where(Agent.external_id == external_id)
         return self.db.scalar(stmt)
 
     def list(self) -> list[Agent]:

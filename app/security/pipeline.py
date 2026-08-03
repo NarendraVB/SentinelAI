@@ -1,8 +1,8 @@
-from app.security.analysis import SecurityAnalysis
-from app.security.risk import RiskEngine
 from app.detection.engine import DetectionEngine
 from app.models.event import Event
 from app.policies.engine import PolicyEngine
+from app.security.analysis import SecurityAnalysis
+from app.security.risk import RiskEngine
 
 
 class SecurityPipeline:
