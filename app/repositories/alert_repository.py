@@ -3,7 +3,7 @@ from __future__ import annotations
 from sqlalchemy.orm import Session
 
 from app.models.alert import Alert
-
+from uuid import UUID
 
 class AlertRepository:
     """
@@ -26,7 +26,7 @@ class AlertRepository:
             .all()
         )
 
-    def get_by_id(self, alert_id):
+    def get_by_id(self, alert_id: UUID):
         return (
             self.db.query(Alert)
             .filter(Alert.id == alert_id)

@@ -7,7 +7,8 @@ from app.models.alert import (
 )
 from app.repositories.alert_repository import AlertRepository
 from app.alerts.model import Alert as DomainAlert
-
+from uuid import UUID
+from app.models.alert import AlertStatus
 
 class AlertService:
 
@@ -16,7 +17,17 @@ class AlertService:
         repository: AlertRepository,
     ):
         self.repository = repository
-
+        
+    def get_alerts(self):
+        return self.repository.get_all()
+    
+    def get_alert(
+        self,
+        alert_id: UUID,
+    ):
+        return self.repository.get_by_id(alert_id)
+    
+    
     def create_alert(
         self,
         event_id,
@@ -39,3 +50,31 @@ class AlertService:
 
     def list_alerts(self):
         return self.repository.get_all()
+    
+    def acknowledge_alert(
+        self,
+        alert_id: UUID,
+    ):
+
+        alert = self.repository.get_by_id(alert_id)
+
+        if not alert:
+            return None
+
+        alert.status = AlertStatus.ACKNOWLEDGED
+
+        return self.repository.update(alert)
+    
+    def close_alert(
+        self,
+        alert_id: UUID,
+    ):
+
+        alert = self.repository.get_by_id(alert_id)
+
+        if not alert:
+            return None
+
+        alert.status = AlertStatus.CLOSED
+
+        return self.repository.update(alert)
