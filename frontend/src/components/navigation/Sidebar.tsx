@@ -20,6 +20,11 @@ const items = [
     to: "/alerts",
   },
   {
+    label: "Events",
+    icon: LayoutDashboard,
+    to: "/events",
+  },
+  {
     label: "Incidents",
     icon: ShieldAlert,
     to: "/incidents",
@@ -29,6 +34,7 @@ const items = [
     icon: Bot,
     to: "/agents",
   },
+  
   {
     label: "Analytics",
     icon: ChartColumn,

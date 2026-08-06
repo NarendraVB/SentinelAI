@@ -8,6 +8,7 @@ import IncidentsPage from "@/features/incidents/IncidentsPage";
 import AgentsPage from "@/features/agents/AgentsPage";
 import AnalyticsPage from "@/features/analytics/AnalyticsPage";
 import { SettingsPage } from "@/features/settings";
+import { EventsPage } from "@/features/events";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
     path: "settings",
     element: <SettingsPage />,
+  },
+  {
+    path: "events",
+    element: <EventsPage />,
   },
     ],
   },
