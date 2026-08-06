@@ -8,6 +8,7 @@ import AgentDrawer from "./AgentDrawer";
 import PageLoader from "@/components/common/PageLoader";
 import ErrorState from "@/components/common/ErrorState";
 import FilterBar from "@/components/common/FilterBar";
+import Pagination from "@/components/common/Pagination";
 
 export default function AgentsTable() {
   const { data, isLoading, isError } = useAgents();
@@ -18,6 +19,9 @@ export default function AgentsTable() {
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [status, setStatus] = useState("");
+  const [page, setPage] = useState(1);
+
+const PAGE_SIZE = 10;
 
   const agents = useMemo(() => {
     if (!data) return [];
@@ -38,7 +42,15 @@ export default function AgentsTable() {
       matchesStatus
     );
   });
+  
 }, [data, search, status]);
+
+
+  const paginatedAgents = useMemo(() => {
+  const start = (page - 1) * PAGE_SIZE;
+
+  return agents.slice(start, start + PAGE_SIZE);
+}, [agents, page]);
 
   if (isLoading) {
     return (
@@ -84,7 +96,7 @@ export default function AgentsTable() {
 
           <tbody>
 
-            {agents.map((agent) => (
+            {paginatedAgents.map((agent) => (
 
               <tr
                 key={agent.id}
@@ -154,7 +166,11 @@ export default function AgentsTable() {
           </tbody>
 
         </table>
-
+        <Pagination
+            page={page}
+            totalPages={Math.ceil(agents.length / PAGE_SIZE)}
+            onChange={setPage}
+            />
       </div>
 
       <AgentDrawer

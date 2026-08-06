@@ -11,6 +11,7 @@ import AlertDrawer from "./AlertDrawer";
 import PageLoader from "@/components/common/PageLoader";
 import ErrorState from "@/components/common/ErrorState";
 import FilterBar from "@/components/common/FilterBar";
+import Pagination from "@/components/common/Pagination";
 
 export default function AlertsTable() {
   const { data, isLoading, isError } = useAlerts();
@@ -23,6 +24,9 @@ export default function AlertsTable() {
   const [severity, setSeverity] = useState("");
 
   const [status, setStatus] = useState("");
+  const [page, setPage] = useState(1);
+
+const PAGE_SIZE = 10;
 
   const alerts = useMemo(() => {
   if (!data) return [];
@@ -47,6 +51,11 @@ export default function AlertsTable() {
     );
   });
 }, [data, search, severity, status]);
+const paginatedAlerts = useMemo(() => {
+  const start = (page - 1) * PAGE_SIZE;
+
+  return alerts.slice(start, start + PAGE_SIZE);
+}, [alerts, page]);
 
   if (isLoading) {
     return (
@@ -101,7 +110,7 @@ export default function AlertsTable() {
 
           <tbody>
 
-            {alerts.map((alert: Alert) => (
+            {paginatedAlerts.map((alert: Alert) => (
 
               <tr
                 key={alert.id}
@@ -163,6 +172,11 @@ export default function AlertsTable() {
           </tbody>
 
         </table>
+        <Pagination
+  page={page}
+  totalPages={Math.ceil(alerts.length / PAGE_SIZE)}
+  onChange={setPage}
+/>
 
       </div>
 

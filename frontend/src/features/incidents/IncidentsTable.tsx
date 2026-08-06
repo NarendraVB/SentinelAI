@@ -11,6 +11,7 @@ import IncidentDrawer from "./IncidentDrawer";
 import PageLoader from "@/components/common/PageLoader";
 import ErrorState from "@/components/common/ErrorState";
 import FilterBar from "@/components/common/FilterBar";
+import Pagination from "@/components/common/Pagination";
 
 export default function IncidentsTable() {
   const { data, isLoading, isError } = useIncidents();
@@ -22,6 +23,9 @@ export default function IncidentsTable() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [severity, setSeverity] = useState("");
     const [status, setStatus] = useState("");
+    const [page, setPage] = useState(1);
+
+const PAGE_SIZE = 10;
 
   const incidents = useMemo(() => {
     if (!data) return [];
@@ -45,6 +49,11 @@ export default function IncidentsTable() {
     );
   });
 }, [data, search, severity, status]);
+const paginatedIncidents = useMemo(() => {
+  const start = (page - 1) * PAGE_SIZE;
+
+  return incidents.slice(start, start + PAGE_SIZE);
+}, [incidents, page]);
 
   if (isLoading) {
     return (
@@ -90,7 +99,7 @@ export default function IncidentsTable() {
 
           <tbody>
 
-            {incidents.map((incident) => (
+            {paginatedIncidents.map((incident) => (
 
               <tr
                 key={incident.id}
@@ -124,6 +133,11 @@ export default function IncidentsTable() {
           </tbody>
 
         </table>
+        <Pagination
+  page={page}
+  totalPages={Math.ceil(incidents.length / PAGE_SIZE)}
+  onChange={setPage}
+/>
 
       </div>
 

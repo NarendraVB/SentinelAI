@@ -9,6 +9,7 @@ import EventDrawer from "./EventDrawer";
 import PageLoader from "@/components/common/PageLoader";
 import ErrorState from "@/components/common/ErrorState";
 import FilterBar from "@/components/common/FilterBar";
+import Pagination from "@/components/common/Pagination";
 
 export default function EventsTable() {
   const { data, isLoading, isError } = useEvents();
@@ -19,6 +20,9 @@ export default function EventsTable() {
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [severity, setSeverity] = useState("");
+  const [page, setPage] = useState(1);
+
+const PAGE_SIZE = 10;
 
   const events = useMemo(() => {
     if (!data) return [];
@@ -33,6 +37,11 @@ export default function EventsTable() {
       );
     });
   }, [data, search]);
+  const paginatedEvents = useMemo(() => {
+  const start = (page - 1) * PAGE_SIZE;
+
+  return events.slice(start, start + PAGE_SIZE);
+}, [events, page]);
 
   if (isLoading) {
     return (
@@ -74,7 +83,7 @@ export default function EventsTable() {
 
           <tbody>
 
-            {events.map((event) => (
+            {paginatedEvents.map((event) => (
 
               <tr
                 key={event.id}
@@ -130,6 +139,11 @@ export default function EventsTable() {
           </tbody>
 
         </table>
+        <Pagination
+  page={page}
+  totalPages={Math.ceil(events.length / PAGE_SIZE)}
+  onChange={setPage}
+/>
 
       </div>
 
