@@ -7,6 +7,7 @@ import AlertsPage from "@/features/alerts/AlertsPage";
 import IncidentsPage from "@/features/incidents/IncidentsPage";
 import AgentsPage from "@/features/agents/AgentsPage";
 import AnalyticsPage from "@/features/analytics/AnalyticsPage";
+import { SettingsPage } from "@/features/settings";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
     path: "analytics",
     element: <AnalyticsPage />,
       },
+      {
+    path: "settings",
+    element: <SettingsPage />,
+  },
     ],
   },
 ]);
