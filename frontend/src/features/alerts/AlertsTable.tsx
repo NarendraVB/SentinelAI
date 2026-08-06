@@ -10,6 +10,7 @@ import StatusBadge from "./StatusBadge";
 import AlertDrawer from "./AlertDrawer";
 import PageLoader from "@/components/common/PageLoader";
 import ErrorState from "@/components/common/ErrorState";
+import FilterBar from "@/components/common/FilterBar";
 
 export default function AlertsTable() {
   const { data, isLoading, isError } = useAlerts();
@@ -19,19 +20,33 @@ export default function AlertsTable() {
   const [selectedAlert, setSelectedAlert] = useState<string>();
 
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [severity, setSeverity] = useState("");
+
+  const [status, setStatus] = useState("");
 
   const alerts = useMemo(() => {
-    if (!data) return [];
+  if (!data) return [];
 
-    return data.filter((alert) => {
-      const q = search.toLowerCase();
+  return data.filter((alert: Alert) => {
+    const q = search.toLowerCase();
 
-      return (
-        alert.title.toLowerCase().includes(q) ||
-        alert.reason.toLowerCase().includes(q)
-      );
-    });
-  }, [data, search]);
+    const matchesSearch =
+      alert.title.toLowerCase().includes(q) ||
+      alert.reason.toLowerCase().includes(q);
+
+    const matchesSeverity =
+      !severity || alert.severity === severity;
+
+    const matchesStatus =
+      !status || alert.status === status;
+
+    return (
+      matchesSearch &&
+      matchesSeverity &&
+      matchesStatus
+    );
+  });
+}, [data, search, severity, status]);
 
   if (isLoading) {
     return (
@@ -53,16 +68,16 @@ export default function AlertsTable() {
     <>
       <div className="rounded-xl border border-zinc-800 bg-zinc-900">
 
-        <div className="border-b border-zinc-800 p-4">
-
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search alerts..."
-            className="w-80 rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white outline-none focus:border-blue-500"
-          />
-
-        </div>
+        <FilterBar
+      search={search}
+      onSearchChange={setSearch}
+      severity={severity}
+      onSeverityChange={setSeverity}
+      status={status}
+      onStatusChange={setStatus}
+      
+  />
+  
 
         <table className="w-full">
 

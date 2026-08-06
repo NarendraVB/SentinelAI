@@ -5,11 +5,11 @@ export default function EventsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-4xl font-bold text-white">
-          Runtime Events
+        Events
         </h1>
 
         <p className="text-zinc-400">
-          Inspect AI runtime events before they become alerts.
+          Monitor AI agent runtime events.
         </p>
       </div>
 
