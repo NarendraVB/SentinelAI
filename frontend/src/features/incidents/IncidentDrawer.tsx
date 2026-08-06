@@ -55,7 +55,7 @@ export default function IncidentDrawer({
 
         {isLoading || !data ? (
           <div className="flex h-full items-center justify-center text-zinc-500">
-            {isLoading ? <PageLoader /> : <ErrorState />}
+            {isLoading ? <PageLoader /> : <ErrorState title="Incident not found" description="The requested incident could not be found." />}
           </div>
         ) : (
           <>

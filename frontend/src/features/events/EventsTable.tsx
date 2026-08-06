@@ -37,7 +37,7 @@ export default function EventsTable() {
   if (isLoading) {
     return (
       <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-zinc-500">
-        {isLoading ? <PageLoader /> : <ErrorState />}
+        {isLoading ? <PageLoader /> : <ErrorState title="Error" description="An error occurred while fetching events." />}
       </div>
     );
   }
@@ -45,7 +45,7 @@ export default function EventsTable() {
   if (isError) {
     return (
       <div className="rounded-xl border border-red-900 bg-zinc-900 p-8 text-red-400">
-        {isError ? <ErrorState /> : <PageLoader />}
+        {isError ? <ErrorState title="Error" description="An error occurred while fetching events." /> : <PageLoader />}
       </div>
     );
   }

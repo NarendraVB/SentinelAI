@@ -8,6 +8,8 @@ import {
 
 import { useAnalytics } from "@/hooks/useAnalytics";
 import PageLoader from "@/components/common/PageLoader";
+import ErrorState from "@/components/common/ErrorState";
+
 
 const COLORS = [
   "#ef4444",

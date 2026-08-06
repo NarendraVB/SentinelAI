@@ -32,7 +32,7 @@ export default function RecentAlerts() {
   if (isLoading) {
     return (
       <div className="flex h-72 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900 text-zinc-500">
-        {isLoading ? <PageLoader /> : <ErrorState />}
+        {isLoading ? <PageLoader /> : <ErrorState title="Error" description="An error occurred while fetching alerts." />}
       </div>
     );
   }

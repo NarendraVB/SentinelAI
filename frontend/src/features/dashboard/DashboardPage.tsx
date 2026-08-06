@@ -20,7 +20,7 @@ export default function DashboardPage() {
   if (isLoading) {
     return (
       <div className="flex h-96 items-center justify-center text-zinc-400">
-        {isLoading ? <PageLoader /> : <ErrorState />}
+        {isLoading ? <PageLoader /> : <ErrorState title="Error" description="An error occurred while fetching metrics." />}
       </div>
     );
   }
@@ -28,7 +28,7 @@ export default function DashboardPage() {
   if (isError || !data) {
     return (
       <div className="flex h-96 items-center justify-center text-red-400">
-        {isError ? <ErrorState /> : <PageLoader />}
+        {isError ? <ErrorState title="Error" description="An error occurred while fetching metrics." /> : <PageLoader />}
       </div>
     );
   }

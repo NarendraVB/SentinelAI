@@ -55,7 +55,7 @@ export default function AgentDrawer({
 
         {isLoading || !agent ? (
           <div className="flex h-full items-center justify-center text-zinc-500">
-            {isLoading ? <PageLoader /> : <ErrorState />}
+            {isLoading ? <PageLoader /> : <ErrorState title="Agent not found" description="The requested agent could not be found." />}
           </div>
         ) : (
           <>

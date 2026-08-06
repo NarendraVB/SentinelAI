@@ -58,7 +58,7 @@ export default function AlertDrawer({
       <DrawerContent className="ml-auto h-screen w-[520px] max-w-full rounded-none border-l border-zinc-800 bg-zinc-950">
         {isLoading || !alert ? (
           <div className="flex h-full items-center justify-center text-zinc-500">
-            {isLoading ? <PageLoader /> : <ErrorState />}
+            {isLoading ? <PageLoader /> : <ErrorState title="Alert not found" description="The requested alert could not be found." />}
           </div>
         ) : (
           <>
