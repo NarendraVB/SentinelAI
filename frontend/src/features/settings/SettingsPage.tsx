@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import Section from "@/components/layout/Section";
+import Section from "@/components/common/Section";
 
 import SettingsCard from "./SettingsCard";
 
@@ -28,7 +28,7 @@ export default function SettingsPage() {
   return (
     <Section
       title="Settings"
-      description="Configure SentinelAI dashboard preferences."
+      
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
