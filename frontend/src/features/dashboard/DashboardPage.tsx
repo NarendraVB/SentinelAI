@@ -9,6 +9,8 @@ import MetricCard from "@/components/common/MetricCard";
 import PageHeader from "@/components/common/PageHeader";
 import Section from "@/components/common/Section";
 import { useMetrics } from "@/hooks/useMetrics";
+import RecentAlerts from "./RecentAlerts";
+
 
 export default function DashboardPage() {
   const { data, isLoading, isError } = useMetrics();
@@ -63,11 +65,11 @@ export default function DashboardPage() {
       </div>
 
       <Section title="Recent Alerts">
-        <div className="mt-4 flex h-72 items-center justify-center rounded-xl border border-dashed border-zinc-800 bg-zinc-900 text-zinc-500">
-          Alerts table coming next...
+      <div className="mt-4">
+        <RecentAlerts />
         </div>
       </Section>
-
+      
       <Section title="Analytics">
         <div className="mt-6 grid gap-6 xl:grid-cols-2">
           <div className="flex h-80 items-center justify-center rounded-xl border border-dashed border-zinc-800 bg-zinc-900 text-zinc-500">
