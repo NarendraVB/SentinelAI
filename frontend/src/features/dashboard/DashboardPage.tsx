@@ -10,7 +10,7 @@ import PageHeader from "@/components/common/PageHeader";
 import Section from "@/components/common/Section";
 import { useMetrics } from "@/hooks/useMetrics";
 import RecentAlerts from "./RecentAlerts";
-
+import RecentIncidents from "./RecentIncidents";
 
 export default function DashboardPage() {
   const { data, isLoading, isError } = useMetrics();
@@ -68,6 +68,11 @@ export default function DashboardPage() {
       <div className="mt-4">
         <RecentAlerts />
         </div>
+      </Section>
+      <Section title="Recent Incidents">
+      <div className="mt-4">
+        <RecentIncidents />
+      </div>
       </Section>
       
       <Section title="Analytics">
