@@ -8,8 +8,27 @@ import {
 import MetricCard from "@/components/common/MetricCard";
 import PageHeader from "@/components/common/PageHeader";
 import Section from "@/components/common/Section";
+import { useMetrics } from "@/hooks/useMetrics";
 
 export default function DashboardPage() {
+  const { data, isLoading, isError } = useMetrics();
+
+  if (isLoading) {
+    return (
+      <div className="flex h-96 items-center justify-center text-zinc-400">
+        Loading dashboard...
+      </div>
+    );
+  }
+
+  if (isError || !data) {
+    return (
+      <div className="flex h-96 items-center justify-center text-red-400">
+        Unable to load dashboard metrics.
+      </div>
+    );
+  }
+
   return (
     <>
       <PageHeader
@@ -20,43 +39,43 @@ export default function DashboardPage() {
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard
           title="Agents"
-          value="0"
+          value={data.agents}
           icon={Bot}
         />
 
         <MetricCard
-          title="Alerts"
-          value="0"
+          title="Events"
+          value={data.events}
+          icon={Activity}
+        />
+
+        <MetricCard
+          title="Open Alerts"
+          value={data.alerts_open}
           icon={TriangleAlert}
         />
 
         <MetricCard
-          title="Incidents"
-          value="0"
+          title="Open Incidents"
+          value={data.incidents_open}
           icon={ShieldAlert}
-        />
-
-        <MetricCard
-          title="Average Risk"
-          value="0%"
-          icon={Activity}
         />
       </div>
 
       <Section title="Recent Alerts">
-        <div className="flex h-72 items-center justify-center rounded-xl border border-dashed border-zinc-800 bg-zinc-900 text-zinc-500">
-          Alerts table will appear here
+        <div className="mt-4 flex h-72 items-center justify-center rounded-xl border border-dashed border-zinc-800 bg-zinc-900 text-zinc-500">
+          Alerts table coming next...
         </div>
       </Section>
 
-      <Section title="Risk Overview">
+      <Section title="Analytics">
         <div className="mt-6 grid gap-6 xl:grid-cols-2">
           <div className="flex h-80 items-center justify-center rounded-xl border border-dashed border-zinc-800 bg-zinc-900 text-zinc-500">
-            Risk Distribution Chart
+            Alert Severity Chart
           </div>
 
           <div className="flex h-80 items-center justify-center rounded-xl border border-dashed border-zinc-800 bg-zinc-900 text-zinc-500">
-            Severity Breakdown
+            Incident Overview Chart
           </div>
         </div>
       </Section>

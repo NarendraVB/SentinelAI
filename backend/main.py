@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-
+from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.agents import router as agent_router
 from app.api.v1.alerts import router as alert_router
 from app.api.v1.events import router as event_router
@@ -11,6 +11,15 @@ from app.core.exceptions import register_exception_handlers
 app = FastAPI(
     title="SentinelAI",
     version="0.1.0",
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 register_exception_handlers(app)
