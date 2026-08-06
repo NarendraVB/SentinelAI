@@ -1,14 +1,14 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-export default function usePolling(
-  callback: () => void,
-  interval = 10000
-) {
+export function usePolling(interval = 10000) {
+  const queryClient = useQueryClient();
+
   useEffect(() => {
-    callback();
+    const timer = setInterval(() => {
+      queryClient.invalidateQueries();
+    }, interval);
 
-    const id = setInterval(callback, interval);
-
-    return () => clearInterval(id);
-  }, [callback, interval]);
+    return () => clearInterval(timer);
+  }, [interval, queryClient]);
 }
