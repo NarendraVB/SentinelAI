@@ -11,6 +11,8 @@ import Section from "@/components/common/Section";
 import { useMetrics } from "@/hooks/useMetrics";
 import RecentAlerts from "./RecentAlerts";
 import RecentIncidents from "./RecentIncidents";
+import PageLoader from "@/components/common/PageLoader";
+import ErrorState from "@/components/common/ErrorState";
 
 export default function DashboardPage() {
   const { data, isLoading, isError } = useMetrics();
@@ -18,7 +20,7 @@ export default function DashboardPage() {
   if (isLoading) {
     return (
       <div className="flex h-96 items-center justify-center text-zinc-400">
-        Loading dashboard...
+        {isLoading ? <PageLoader /> : <ErrorState />}
       </div>
     );
   }
@@ -26,7 +28,7 @@ export default function DashboardPage() {
   if (isError || !data) {
     return (
       <div className="flex h-96 items-center justify-center text-red-400">
-        Unable to load dashboard metrics.
+        {isError ? <ErrorState /> : <PageLoader />}
       </div>
     );
   }

@@ -6,6 +6,8 @@ import { useIncidents } from "@/hooks/useIncidents";
 import SeverityBadge from "@/features/incidents/SeverityBadge";
 import StatusBadge from "@/features/incidents/StatusBadge";
 import IncidentDrawer from "@/features/incidents/IncidentDrawer";
+import PageLoader from "@/components/common/PageLoader";
+import ErrorState from "@/components/common/ErrorState";
 
 import type { Incident } from "@/services/incidents.service";
 
@@ -30,7 +32,7 @@ export default function RecentIncidents() {
   if (isLoading) {
     return (
       <div className="flex h-72 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900 text-zinc-500">
-        Loading incidents...
+        {isLoading ? <PageLoader /> : <ErrorState />}
       </div>
     );
   }

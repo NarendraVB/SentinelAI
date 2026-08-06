@@ -15,6 +15,8 @@ import { useAlertMutations } from "@/hooks/useAlertMutations";
 
 import SeverityBadge from "./SeverityBadge";
 import StatusBadge from "./StatusBadge";
+import PageLoader from "@/components/common/PageLoader";
+import ErrorState from "@/components/common/ErrorState";
 
 interface AlertDrawerProps {
   open: boolean;
@@ -56,7 +58,7 @@ export default function AlertDrawer({
       <DrawerContent className="ml-auto h-screen w-[520px] max-w-full rounded-none border-l border-zinc-800 bg-zinc-950">
         {isLoading || !alert ? (
           <div className="flex h-full items-center justify-center text-zinc-500">
-            Loading...
+            {isLoading ? <PageLoader /> : <ErrorState />}
           </div>
         ) : (
           <>

@@ -5,6 +5,8 @@ import { useAgents } from "@/hooks/useAgents";
 import type { Agent } from "@/services/agents.services";
 
 import AgentDrawer from "./AgentDrawer";
+import PageLoader from "@/components/common/PageLoader";
+import ErrorState from "@/components/common/ErrorState";
 
 export default function AgentsTable() {
   const { data, isLoading, isError } = useAgents();
@@ -32,7 +34,7 @@ export default function AgentsTable() {
   if (isLoading) {
     return (
       <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-zinc-500">
-        Loading agents...
+        {isLoading ? <PageLoader /> : <ErrorState />}
       </div>
     );
   }
@@ -40,7 +42,7 @@ export default function AgentsTable() {
   if (isError) {
     return (
       <div className="rounded-xl border border-red-900 bg-zinc-900 p-8 text-red-400">
-        Failed to load agents.
+        {isError ? <ErrorState /> : <PageLoader />}
       </div>
     );
   }

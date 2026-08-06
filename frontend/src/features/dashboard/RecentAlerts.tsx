@@ -8,6 +8,8 @@ import type { Alert } from "@/types/alert";
 import SeverityBadge from "@/features/alerts/SeverityBadge";
 import StatusBadge from "@/features/alerts/StatusBadge";
 import AlertDrawer from "@/features/alerts/AlertDrawer";
+import PageLoader from "@/components/common/PageLoader";
+import ErrorState from "@/components/common/ErrorState";
 
 export default function RecentAlerts() {
   const { data, isLoading } = useAlerts();
@@ -30,7 +32,7 @@ export default function RecentAlerts() {
   if (isLoading) {
     return (
       <div className="flex h-72 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900 text-zinc-500">
-        Loading alerts...
+        {isLoading ? <PageLoader /> : <ErrorState />}
       </div>
     );
   }

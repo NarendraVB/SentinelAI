@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/drawer";
 
 import { useAgent } from "@/hooks/useAgents";
+import PageLoader from "@/components/common/PageLoader";
+import ErrorState from "@/components/common/ErrorState";
 
 interface Props {
   open: boolean;
@@ -53,7 +55,7 @@ export default function AgentDrawer({
 
         {isLoading || !agent ? (
           <div className="flex h-full items-center justify-center text-zinc-500">
-            Loading...
+            {isLoading ? <PageLoader /> : <ErrorState />}
           </div>
         ) : (
           <>

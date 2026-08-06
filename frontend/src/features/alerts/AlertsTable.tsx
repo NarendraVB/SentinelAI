@@ -8,6 +8,8 @@ import type { Alert } from "@/types/alert";
 import SeverityBadge from "./SeverityBadge";
 import StatusBadge from "./StatusBadge";
 import AlertDrawer from "./AlertDrawer";
+import PageLoader from "@/components/common/PageLoader";
+import ErrorState from "@/components/common/ErrorState";
 
 export default function AlertsTable() {
   const { data, isLoading, isError } = useAlerts();
@@ -34,7 +36,7 @@ export default function AlertsTable() {
   if (isLoading) {
     return (
       <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-zinc-500">
-        Loading alerts...
+        {isLoading ? <PageLoader /> : <ErrorState />}
       </div>
     );
   }
@@ -42,7 +44,7 @@ export default function AlertsTable() {
   if (isError) {
     return (
       <div className="rounded-xl border border-red-900 bg-zinc-900 p-8 text-red-400">
-        Failed to load alerts.
+        {isError ? <ErrorState /> : <PageLoader />}
       </div>
     );
   }

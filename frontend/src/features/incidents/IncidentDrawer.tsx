@@ -13,6 +13,8 @@ import { useIncident } from "@/hooks/useIncidents";
 
 import SeverityBadge from "./SeverityBadge";
 import StatusBadge from "./StatusBadge";
+import PageLoader from "@/components/common/PageLoader";
+import ErrorState from "@/components/common/ErrorState";
 
 interface Props {
   open: boolean;
@@ -53,7 +55,7 @@ export default function IncidentDrawer({
 
         {isLoading || !data ? (
           <div className="flex h-full items-center justify-center text-zinc-500">
-            Loading...
+            {isLoading ? <PageLoader /> : <ErrorState />}
           </div>
         ) : (
           <>

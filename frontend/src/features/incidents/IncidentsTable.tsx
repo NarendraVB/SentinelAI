@@ -8,6 +8,8 @@ import type { Incident } from "@/services/incidents.service";
 import SeverityBadge from "./SeverityBadge";
 import StatusBadge from "./StatusBadge";
 import IncidentDrawer from "./IncidentDrawer";
+import PageLoader from "@/components/common/PageLoader";
+import ErrorState from "@/components/common/ErrorState";
 
 export default function IncidentsTable() {
   const { data, isLoading, isError } = useIncidents();
@@ -29,7 +31,7 @@ export default function IncidentsTable() {
   if (isLoading) {
     return (
       <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-zinc-500">
-        Loading incidents...
+        {isLoading ? <PageLoader /> : <ErrorState />}
       </div>
     );
   }
@@ -37,7 +39,7 @@ export default function IncidentsTable() {
   if (isError) {
     return (
       <div className="rounded-xl border border-red-900 bg-zinc-900 p-8 text-red-400">
-        Failed to load incidents.
+        {isError ? <ErrorState /> : <PageLoader />}
       </div>
     );
   }
