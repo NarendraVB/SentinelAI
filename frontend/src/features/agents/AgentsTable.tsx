@@ -7,6 +7,7 @@ import type { Agent } from "@/services/agents.services";
 import AgentDrawer from "./AgentDrawer";
 import PageLoader from "@/components/common/PageLoader";
 import ErrorState from "@/components/common/ErrorState";
+import FilterBar from "@/components/common/FilterBar";
 
 export default function AgentsTable() {
   const { data, isLoading, isError } = useAgents();
@@ -16,20 +17,28 @@ export default function AgentsTable() {
   const [selectedAgent, setSelectedAgent] = useState<string>();
 
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [status, setStatus] = useState("");
 
   const agents = useMemo(() => {
     if (!data) return [];
 
     return data.filter((agent: Agent) => {
-      const q = search.toLowerCase();
+    const q = search.toLowerCase();
 
-      return (
-        agent.name.toLowerCase().includes(q) ||
-        agent.vendor.toLowerCase().includes(q) ||
-        agent.owner.toLowerCase().includes(q)
-      );
-    });
-  }, [data, search]);
+    const matchesSearch =
+      agent.name.toLowerCase().includes(q) ||
+      agent.vendor.toLowerCase().includes(q) ||
+      agent.owner.toLowerCase().includes(q);
+
+    const matchesStatus =
+      !status || agent.status === status;
+
+    return (
+      matchesSearch &&
+      matchesStatus
+    );
+  });
+}, [data, search, status]);
 
   if (isLoading) {
     return (
@@ -51,14 +60,12 @@ export default function AgentsTable() {
     <>
       <div className="rounded-xl border border-zinc-800 bg-zinc-900">
 
-        <div className="border-b border-zinc-800 p-4">
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search agents..."
-            className="w-80 rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white outline-none"
-          />
-        </div>
+        <FilterBar
+          search={search}
+          onSearchChange={setSearch}
+          status={status}
+          onStatusChange={setStatus}
+        />
 
         <table className="w-full">
 

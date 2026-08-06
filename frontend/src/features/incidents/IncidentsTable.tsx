@@ -10,6 +10,7 @@ import StatusBadge from "./StatusBadge";
 import IncidentDrawer from "./IncidentDrawer";
 import PageLoader from "@/components/common/PageLoader";
 import ErrorState from "@/components/common/ErrorState";
+import FilterBar from "@/components/common/FilterBar";
 
 export default function IncidentsTable() {
   const { data, isLoading, isError } = useIncidents();
@@ -19,14 +20,31 @@ export default function IncidentsTable() {
   const [selectedIncident, setSelectedIncident] = useState<string>();
 
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [severity, setSeverity] = useState("");
+    const [status, setStatus] = useState("");
 
   const incidents = useMemo(() => {
     if (!data) return [];
 
-    return data.filter((incident: Incident) =>
-      incident.title.toLowerCase().includes(search.toLowerCase())
+    return data.filter((incident: Incident) => {
+    const q = search.toLowerCase();
+
+    const matchesSearch =
+      incident.title.toLowerCase().includes(q);
+
+    const matchesSeverity =
+      !severity || incident.severity === severity;
+
+    const matchesStatus =
+      !status || incident.status === status;
+
+    return (
+      matchesSearch &&
+      matchesSeverity &&
+      matchesStatus
     );
-  }, [data, search]);
+  });
+}, [data, search, severity, status]);
 
   if (isLoading) {
     return (
@@ -48,16 +66,14 @@ export default function IncidentsTable() {
     <>
       <div className="rounded-xl border border-zinc-800 bg-zinc-900">
 
-        <div className="border-b border-zinc-800 p-4">
-
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search incidents..."
-            className="w-80 rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white outline-none"
-          />
-
-        </div>
+        <FilterBar
+    search={search}
+    onSearchChange={setSearch}
+    severity={severity}
+    onSeverityChange={setSeverity}
+    status={status}
+    onStatusChange={setStatus}
+/>
 
         <table className="w-full">
 

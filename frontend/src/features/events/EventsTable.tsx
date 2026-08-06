@@ -6,6 +6,9 @@ import { useEvents } from "@/hooks/useEvents";
 import type { Event } from "@/services/events.service";
 
 import EventDrawer from "./EventDrawer";
+import PageLoader from "@/components/common/PageLoader";
+import ErrorState from "@/components/common/ErrorState";
+import FilterBar from "@/components/common/FilterBar";
 
 export default function EventsTable() {
   const { data, isLoading, isError } = useEvents();
@@ -15,6 +18,7 @@ export default function EventsTable() {
   const [selectedEvent, setSelectedEvent] = useState<string>();
 
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [severity, setSeverity] = useState("");
 
   const events = useMemo(() => {
     if (!data) return [];
@@ -33,7 +37,7 @@ export default function EventsTable() {
   if (isLoading) {
     return (
       <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-zinc-500">
-        Loading events...
+        {isLoading ? <PageLoader /> : <ErrorState />}
       </div>
     );
   }
@@ -41,7 +45,7 @@ export default function EventsTable() {
   if (isError) {
     return (
       <div className="rounded-xl border border-red-900 bg-zinc-900 p-8 text-red-400">
-        Failed to load events.
+        {isError ? <ErrorState /> : <PageLoader />}
       </div>
     );
   }
@@ -50,16 +54,10 @@ export default function EventsTable() {
     <>
       <div className="rounded-xl border border-zinc-800 bg-zinc-900">
 
-        <div className="border-b border-zinc-800 p-4">
-
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search events..."
-            className="w-80 rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white outline-none"
-          />
-
-        </div>
+        <FilterBar
+    search={search}
+    onSearchChange={setSearch}
+/>
 
         <table className="w-full">
 
